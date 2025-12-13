@@ -16,23 +16,24 @@ export function escapeHTML(str) {
 }
 
 /**
- * Valida que la fecha de la cita no sea pasada.
+ * Valida que la fecha y hora de la cita no sean pasadas.
  * @param {string} fechaString - Fecha en formato 'YYYY-MM-DD'.
- * @returns {boolean} True si la fecha es válida (hoy o futuro).
+ * @param {string} horaString - Hora en formato 'HH:MM'.
+ * @returns {boolean} True si la fecha y hora son válidas (futuras o el momento actual).
  */
-export function validarFechaCita(fechaString) {
-    if (!fechaString || !/^\d{4}-\d{2}-\d{2}$/.test(fechaString)) {
-        return false;
-    }
+export function validarFechaHoraCita(fechaString, horaString) {
+    if (!fechaString || !horaString) return false;
 
-    const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0); 
+    // Crear un objeto Date completo (fecha y hora)
+    // Usamos el formato ISO 8601 'YYYY-MM-DDT00:00:00' para evitar problemas de zona horaria
+    const fechaHoraCita = new Date(`${fechaString}T${horaString}`);
+
+    if (isNaN(fechaHoraCita.getTime())) return false;
+
+    const ahora = new Date();
     
-    const fechaSeleccionada = new Date(fechaString + 'T00:00:00');
-
-    if (isNaN(fechaSeleccionada.getTime())) return false;
-
-    return fechaSeleccionada >= hoy;
+    // Comparamos la fecha y hora de la cita con el momento actual
+    return fechaHoraCita >= ahora;
 }
 
 /**

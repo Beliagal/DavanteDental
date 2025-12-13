@@ -44,9 +44,12 @@ h2 {
     color: var(--color-text-light);
 }
 
-h4 {
+.form-note {
     font-size: 0.8em;
-    color:#0c4a45;
+    color: var(--color-primary);
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 100%;
 }
 
 footer {
@@ -63,6 +66,20 @@ footer {
     max-width: 150px;
     height: auto;
     width: 100%;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+.search-container input[type="search"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--color-primary);
+    border-radius: 5px;
+    font-size: 1em;
 }
 
 .main-container {
@@ -553,6 +570,26 @@ footer {
 }
 
 /* 7. UTILIDADES DE ACCESIBILIDAD */
+
+/* 8. ESTILOS DE CITAS PASADAS (check.html) */
+.past-appointments-summary {
+    cursor: pointer;
+    color: var(--color-primary);
+    font-weight: bold;
+    padding: 10px;
+    background: var(--color-grey-light);
+    border-radius: 5px;
+    display: block; /* Asegura que el summary ocupe todo el ancho */
+}
+
+.past-appointments-content {
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+.past-appointments-details {
+    margin-top: 30px;
+}
 .sr-only {
     position: absolute;
     width: 1px;

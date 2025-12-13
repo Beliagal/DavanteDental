@@ -5,7 +5,7 @@
 
 import { guardarCita, obtenerCitas } from './storage.js';
 // Se importa formatearFecha para mejorar el mensaje de error en conflicto
-import { validarFechaCita, validarDNI, formatearFecha } from './utils.js'; 
+import { validarFechaHoraCita, validarDNI, formatearFecha } from './utils.js'; 
 
 function setupIndexPageLogic() {
     const modal = document.getElementById('reservationModal');
@@ -47,8 +47,8 @@ function setupIndexPageLogic() {
         if (charCount) charCount.textContent = `0 / ${MAX_CHAR_COUNT} caracteres`;
         if (errorMsg) errorMsg.style.display = 'none';
 
+        // Limpiar el parámetro 'edit' de la URL si existe
         if (window.location.search.includes('edit=')) {
-            // CORRECCIÓN: Usar replaceState para no saturar el historial
             window.history.replaceState({}, document.title, window.location.pathname); 
         }
         
@@ -113,28 +113,10 @@ function setupIndexPageLogic() {
              return;
         }
         
-        // 3. Validación de fecha futura
-        if (!validarFechaCita(data.fecha_reserva)) {
-            displayError('Error: La fecha de la cita no puede ser pasada.');
+        // 3. Validación de fecha y hora futura (CRÍTICO CORREGIDO)
+        if (!validarFechaHoraCita(data.fecha_reserva, data.hora_reserva)) {
+            displayError('Error: La fecha y hora de la cita no pueden ser pasadas.');
             return;
-        }
-        
-        // 4. Validación de Hora si la cita es HOY (CRÍTICO)
-        const hoy = new Date();
-        const fechaSeleccionada = new Date(data.fecha_reserva + 'T00:00:00'); 
-        hoy.setHours(0, 0, 0, 0);
-
-        if (fechaSeleccionada.getTime() === hoy.getTime()) {
-            const ahora = new Date();
-            const [hora, minuto] = data.hora_reserva.split(':').map(Number);
-            
-            const horaSeleccionada = new Date();
-            horaSeleccionada.setHours(hora, minuto, 0, 0);
-
-            if (horaSeleccionada < ahora) {
-                displayError('Error: La hora de la cita es pasada. Por favor, selecciona una hora futura o un día diferente.');
-                return;
-            }
         }
         
         // 5. Validación de Conflicto Horario
@@ -173,12 +155,17 @@ function setupIndexPageLogic() {
     };
 
     // --- Cierre de Confirmación ---
+    // --- Cierre de Confirmación (CORREGIDO) ---
     const cerrarConfirmacion = () => {
         if (confirmModal) confirmModal.style.display = 'none';
-        if (form.dataset.editingId || window.location.search.includes('edit=')) {
+        
+        // Solo redirigir si se estaba en modo edición (comprobando el ID en el formulario)
+        if (form.dataset.editingId) {
             window.location.href = 'check.html';
+        } else {
+            // Si no estaba en modo edición, simplemente limpiar el formulario y enfocar el botón.
+            if (openBtn) openBtn.focus();
         }
-        if (openBtn) openBtn.focus();
     };
 
     // --- Inicialización y Event Listeners ---

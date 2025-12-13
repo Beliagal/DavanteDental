@@ -38,8 +38,7 @@ function generarProximoId() {
         localStorage.setItem(COUNTER_KEY, JSON.stringify(contador));
     } catch (e) {
         console.error("No se pudo guardar el contador en LocalStorage.", e);
-        // Si no se puede guardar, se usa un ID simple de fallback
-        return `TEMP-${Date.now()}`;
+        throw new Error("Fallo en la persistencia de datos (LocalStorage lleno o no disponible).");
     }
 
     return `${contador.anio}-${String(contador.seq).padStart(5, '0')}`;

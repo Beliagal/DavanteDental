@@ -214,18 +214,19 @@ function setupCheckPageLogic() {
         // Renderizar citas pasadas (colapsadas por defecto)
         const pasadasHtml = filterAndMapCitas(pasadas);
         pasadasRendered = pasadasHtml.length > 0;
-        if (pasadasRendered) {
-            html += `
-                <details style="margin-top: 30px;">
-                    <summary style="cursor: pointer; color: var(--color-primary); font-weight: bold; padding: 10px; background: var(--color-grey-light); border-radius: 5px;">
-                        📋 Citas Pasadas (${pasadas.length} total, ${pasadasHtml.length} visible)
-                    </summary>
-                    <div style="margin-top: 10px; opacity: 0.7;">
-                        ${pasadasHtml}
-                    </div>
-                </details>
-            `;
-        }
+	        if (pasadasRendered) {
+	            // Uso de clases CSS para Clean Code (separación de preocupaciones)
+	            html += `
+	                <details class="past-appointments-details">
+	                    <summary class="past-appointments-summary">
+	                        📋 Citas Pasadas (${pasadas.length} total, ${pasadasHtml.length} visible)
+	                    </summary>
+	                    <div class="past-appointments-content">
+	                        ${pasadasHtml}
+	                    </div>
+	                </details>
+	            `;
+	        }
 
         if (!futurasRendered && !pasadasRendered) {
              container.innerHTML = `<p class="status-message">No se encontraron citas para el criterio de búsqueda: **${escapeHTML(filtro)}**</p>`;
@@ -238,17 +239,17 @@ function setupCheckPageLogic() {
     const agregarBuscador = () => {
         // Usamos una etiqueta semántica y mejor ubicación para el buscador (antes de la lista)
         const searchInputId = 'searchCitas';
-        const searchBarHtml = `
-            <div style="width: 100%; max-width: 800px; margin-bottom: 20px;">
-                <input 
-                    type="search" 
-                    id="${searchInputId}" 
-                    placeholder="🔍 Buscar por nombre, DNI o ID..."
-                    style="width: 100%; padding: 10px; border: 2px solid var(--color-primary); border-radius: 5px; font-size: 1em;"
-                    aria-label="Buscar citas en la agenda"
-                >
-            </div>
-        `;
+	        // Usamos una clase CSS para el contenedor del buscador
+	        const searchBarHtml = `
+	            <div class="search-container">
+	                <input 
+	                    type="search" 
+	                    id="${searchInputId}" 
+	                    placeholder="🔍 Buscar por nombre, DNI o ID..."
+	                    aria-label="Buscar citas en la agenda"
+	                >
+	            </div>
+	        `;
         
         // Insertar el contenedor del buscador en un lugar apropiado (ej: después del logo)
         const logo = document.querySelector('.logo-image');
