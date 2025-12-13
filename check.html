@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agenda de citas programadas - DavanteDental">
+    <title>Agenda de Citas - DavanteDental</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="main-container">
+        <h1>DavanteDental</h1>
+        
+        <img src="images/logo.png" alt="Logotipo DavanteDental" class="logo-image">
+
+        <section id="agenda-container" class="citas-list-container" aria-live="polite" aria-label="Lista de citas">
+            <p class="status-message">Cargando citas...</p>
+        </section>
+
+        <div class="button-container">
+            <a href="index.html" class="button button-agenda button-volver">
+                ← Volver al Inicio
+            </a>
+        </div>
+    </main>
+
+    <!-- MODAL DE CONFIRMACIÓN DE BORRADO -->
+    <div id="deleteConfirmModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+        <div class="modal-content modal-content--confirm modal-content--delete">
+            <button class="close-button" id="deleteCloseSpan" aria-label="Cerrar" type="button">&times;</button>
+            <span class="success-icon success-icon--warning" aria-hidden="true">⚠</span>
+            <h3 id="deleteModalTitle">Confirmar Borrado</h3>
+            <p>
+                ¿Estás seguro de que deseas eliminar esta cita? Esta acción no se puede deshacer.
+            </p>
+            <div class="button-container">
+                <button id="deleteCancelButton" class="button button-agenda" type="button">
+                    Cancelar
+                </button>
+                <button id="deleteConfirmButton" class="button button--delete" type="button">
+                    Sí, Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h2>Datos de contacto</h2>
+        <p>c/ Sin nombre, 3 - 47001 Valladolid</p>
+        <p>Email: info@davantedental.com | Tel: 983 123 456</p>
+    </footer>
+
+    <script type="module" src="js/checkLogic.js"></script>
+</body>
+</html>

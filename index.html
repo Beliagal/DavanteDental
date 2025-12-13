@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de gestión de citas dentales - DavanteDental">
+    <title>DavanteDental - Gestión de Citas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="main-container">
+        <h1>DavanteDental</h1>
+        
+        <img src="images/logo.png" alt="Logotipo DavanteDental" class="logo-image">
+
+        <div class="button-container"> 
+            <button type="button" class="button" id="openModalButton" aria-haspopup="dialog">
+                📅 Reservar Cita
+            </button>
+            
+            <a href="check.html" class="button button-agenda">
+                📋 Agenda de Citas
+            </a>
+        </div>
+        
+        <div class="status-message" role="status" aria-live="polite"></div>
+    </main>
+
+    <!-- MODAL DE RESERVA -->
+    <div id="reservationModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <button class="close-button" id="closeModalButton" aria-label="Cerrar modal" type="button">&times;</button>
+            
+            <header>
+                <h2 id="modalTitle">Formulario de Reserva</h2>
+                <p>Por favor, completa los datos de la cita.</p>
+            </header>
+
+            <div class="form-container">
+                <form id="modalBookingForm" novalidate>
+                    
+                    <div class="error-mensaje" role="alert" style="display: none;"></div>
+
+                    <fieldset class="form-fieldset">
+                        <legend class="form-legend">Detalles de la Cita</legend>
+                        <div class="flex-group">
+                            <div class="form-field">
+                                <label for="fecha_reserva">Fecha <span aria-label="obligatorio">*</span></label>
+                                <input 
+                                    type="date" 
+                                    id="fecha_reserva" 
+                                    name="fecha_reserva" 
+                                    required 
+                                    aria-required="true"
+                                    onkeydown="return event.key !== 'Enter';" >
+                            </div>
+                            <div class="form-field">
+                                <label for="hora_reserva">Hora <span aria-label="obligatorio">*</span></label>
+                                <select id="hora_reserva" name="hora_reserva" required aria-required="true">
+                                    <option value="" disabled selected>Seleccione una hora</option>
+                                    <optgroup label="Mañana">
+                                        <option value="09:30">09:30</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="10:30">10:30</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="11:30">11:30</option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="12:30">12:30</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="13:30">13:30</option>
+                                    </optgroup>
+                                    <optgroup label="Tarde">
+                                        <option value="16:30">16:30</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="17:30">17:30</option>
+                                        <option value="18:00">18:00</option>
+                                        <option value="18:30">18:30</option>
+                                        <option value="19:00">19:00</option>
+                                        <option value="19:30">19:30</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-fieldset">
+                        <legend class="form-legend">Datos Personales</legend>
+                        <div class="flex-group">
+                            <div class="form-field">
+                                <label for="nombre">Nombre <span aria-label="obligatorio">*</span></label>
+                                <input 
+                                    type="text" 
+                                    id="nombre" 
+                                    name="nombre" 
+                                    required 
+                                    aria-required="true"
+                                    autocomplete="given-name"
+                                >
+                            </div>
+                            <div class="form-field">
+                                <label for="apellidos">Apellidos <span aria-label="obligatorio">*</span></label>
+                                <input 
+                                    type="text" 
+                                    id="apellidos" 
+                                    name="apellidos" 
+                                    required 
+                                    aria-required="true"
+                                    autocomplete="family-name"
+                                >
+                            </div>
+                            <div class="form-field">
+                                <label for="dni">DNI/NIE <span aria-label="obligatorio">*</span></label>
+                                <input 
+                                    type="text" 
+                                    id="dni" 
+                                    name="dni" 
+                                    required 
+                                    aria-required="true"
+                                    pattern="[0-9]{8}[A-Za-z]"
+                                    placeholder="12345678Z"
+                                    maxlength="9"
+                                >
+                                
+                            </div>
+                            <div class="form-field">
+                                <label for="telefono">Teléfono <span aria-label="obligatorio">*</span></label>
+                                <input 
+                                    type="tel" 
+                                    id="telefono" 
+                                    name="telefono" 
+                                    required 
+                                    aria-required="true"
+                                    placeholder="612345678"
+                                    autocomplete="tel"
+                                >
+                            </div>
+                            <h4>Si el paciente es menor de edad, introduzca el DNI y el teléfono del progenitor.</h4>
+                            <div class="form-field">
+                                <label for="fecha_nacimiento">Fecha Nacimiento <span aria-label="obligatorio">*</span></label>
+                                <input 
+                                    type="date" 
+                                    id="fecha_nacimiento" 
+                                    name="fecha_nacimiento" 
+                                    required 
+                                    aria-required="true"
+                                    autocomplete="bday"
+                                >
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-fieldset">
+                        <legend class="form-legend">Observaciones</legend>
+                        <div class="form-field">
+                            <label for="modalObservaciones">
+                                Comentarios adicionales (opcional)
+                            </label>
+                            <textarea 
+                                id="modalObservaciones" 
+                                name="observaciones" 
+                                rows="4" 
+                                maxlength="300"
+                                aria-describedby="modalCharCount"
+                            ></textarea>
+                            <p id="modalCharCount" aria-live="polite">0 / 300 caracteres</p>
+                        </div>
+                    </fieldset>
+
+                    <button type="submit" class="button button-submit-full">
+                        💾 Guardar Cita
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div id="confirmationMessage" class="modal" role="dialog" aria-modal="true" aria-labelledby="confirmationTitle">
+        <div class="modal-content modal-content--confirm">
+            <button class="close-button" id="closeConfirmSpan" aria-label="Cerrar" type="button">&times;</button>
+            <span class="success-icon" aria-hidden="true">✓</span> 
+            <h3 id="confirmationTitle">¡Operación Exitosa!</h3>
+            <p>Los datos de la cita se han guardado correctamente.</p>
+            <button id="closeConfirmButton" class="button" type="button">Aceptar</button>
+        </div>
+    </div>
+
+    <footer>
+        <h2>Datos de contacto</h2>
+        <p>c/ Sin nombre, 3 - 47001 Valladolid</p>
+        <p>Email: info@davantedental.com | Tel: 983 123 456</p>
+    </footer>
+
+    <script type="module" src="js/indexLogic.js"></script>
+</body>
+</html>
