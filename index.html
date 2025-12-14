@@ -24,7 +24,7 @@
             </a>
         </div>
         
-        <div class="status-message" role="status" aria-live="polite"></div>
+        <div class="status-message" role="status"></div>
     </main>
 
     <!-- MODAL DE RESERVA -->
@@ -52,12 +52,11 @@
                                     id="fecha_reserva" 
                                     name="fecha_reserva" 
                                     required 
-                                    aria-required="true"
-                                    onkeydown="return event.key !== 'Enter';" >
+                                     >
                             </div>
                             <div class="form-field">
                                 <label for="hora_reserva">Hora <span aria-label="obligatorio">*</span></label>
-                                <select id="hora_reserva" name="hora_reserva" required aria-required="true">
+                                <select id="hora_reserva" name="hora_reserva" required >
                                     <option value="" disabled selected>Seleccione una hora</option>
                                     <optgroup label="Mañana">
                                         <option value="09:30">09:30</option>
@@ -94,7 +93,7 @@
                                     id="nombre" 
                                     name="nombre" 
                                     required 
-                                    aria-required="true"
+                                    
                                     autocomplete="given-name"
                                 >
                             </div>
@@ -105,7 +104,7 @@
                                     id="apellidos" 
                                     name="apellidos" 
                                     required 
-                                    aria-required="true"
+                                    
                                     autocomplete="family-name"
                                 >
                             </div>
@@ -116,8 +115,8 @@
                                     id="dni" 
                                     name="dni" 
                                     required 
-                                    aria-required="true"
-                                    pattern="[0-9]{8}[A-Za-z]"
+                                    
+                                    pattern="[XYZxyz0-9]{8,9}[A-Za-z]"
                                     placeholder="12345678Z"
                                     maxlength="9"
                                 >
@@ -130,7 +129,7 @@
                                     id="telefono" 
                                     name="telefono" 
                                     required 
-                                    aria-required="true"
+                                    
                                     placeholder="612345678"
                                     autocomplete="tel"
                                 >
@@ -143,7 +142,7 @@
                                     id="fecha_nacimiento" 
                                     name="fecha_nacimiento" 
                                     required 
-                                    aria-required="true"
+                                    
                                     autocomplete="bday"
                                 >
                             </div>
@@ -188,8 +187,11 @@
 
     <footer>
         <h2>Datos de contacto</h2>
-        <p>c/ Sin nombre, 3 - 47001 Valladolid</p>
-        <p>Email: info@davantedental.com | Tel: 983 123 456</p>
+        <div class="footer-contact-info">
+            <p>c/ Sin nombre, 3 - 47001 Valladolid</p>
+            <p>Email: info@davantedental.com</p>
+            <p>Tel: 983 123 456</p>
+        </div>
     </footer>
 
     <script type="module" src="js/indexLogic.js"></script>

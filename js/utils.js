@@ -25,7 +25,6 @@ export function validarFechaHoraCita(fechaString, horaString) {
     if (!fechaString || !horaString) return false;
 
     // Crear un objeto Date completo (fecha y hora)
-    // Usamos el formato ISO 8601 'YYYY-MM-DDT00:00:00' para evitar problemas de zona horaria
     const fechaHoraCita = new Date(`${fechaString}T${horaString}`);
 
     if (isNaN(fechaHoraCita.getTime())) return false;
@@ -37,13 +36,70 @@ export function validarFechaHoraCita(fechaString, horaString) {
 }
 
 /**
- * Valida un DNI/NIE con un formato simple.
+ * Valida que una fecha de nacimiento no sea futura.
+ * @param {string} fechaString - Fecha en formato 'YYYY-MM-DD'.
+ * @returns {boolean} True si la fecha es hoy o pasada.
+ */
+export function validarFechaNoFutura(fechaString) {
+    if (!fechaString) return false;
+    
+    const fecha = new Date(fechaString + 'T00:00:00');
+    const hoy = new Date();
+    
+    // Establecer la hora de hoy a medianoche para comparar solo la fecha
+    hoy.setHours(0, 0, 0, 0);
+
+    if (isNaN(fecha.getTime())) return false;
+
+    // La fecha de nacimiento debe ser menor o igual a hoy
+    return fecha <= hoy;
+}
+
+/**
+ * Valida un DNI/NIE con formato y letra de control.
  * @param {string} dni - El DNI/NIE a validar.
- * @returns {boolean} True si el formato es válido.
+ * @returns {boolean} True si el formato y la letra de control son válidos.
  */
 export function validarDNI(dni) {
-    // Formato simple: 8 dígitos seguidos de 1 letra (para DNI español)
-    return /^\d{8}[A-Z]$/i.test(dni);
+    if (!dni) return false;
+    
+    const dniUpper = dni.toUpperCase();
+    const letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
+    
+    // 1. Validación de formato DNI (8 dígitos + 1 letra)
+    const dniRegex = /^(\d{8})([A-Z])$/;
+    
+    // 2. Validación de formato NIE (X, Y, Z + 7 dígitos + 1 letra)
+    const nieRegex = /^[XYZ]\d{7}[A-Z]$/;
+    
+    let numero;
+    let letra;
+    
+    if (dniRegex.test(dniUpper)) {
+        // Es un DNI
+        numero = dniUpper.substring(0, 8);
+        letra = dniUpper.charAt(8);
+    } else if (nieRegex.test(dniUpper)) {
+        // Es un NIE
+        // Reemplazar la letra inicial por su equivalente numérico
+        const niePrefix = dniUpper.charAt(0);
+        let nieNum = dniUpper.substring(1, 8);
+        
+        if (niePrefix === 'X') nieNum = '0' + nieNum;
+        else if (niePrefix === 'Y') nieNum = '1' + nieNum;
+        else if (niePrefix === 'Z') nieNum = '2' + nieNum;
+        
+        numero = nieNum;
+        letra = dniUpper.charAt(8);
+    } else {
+        return false; // Formato incorrecto
+    }
+    
+    // 3. Validación de la letra de control
+    const indice = parseInt(numero, 10) % 23;
+    const letraCalculada = letras.charAt(indice);
+    
+    return letra === letraCalculada;
 }
 
 /**

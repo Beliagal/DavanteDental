@@ -24,7 +24,8 @@
 
 body {
     background-color: var(--color-background-main);
-    font-family: 'Courier New', Courier, monospace;
+    /* Tipografía mejorada para legibilidad y profesionalidad */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     margin: 0;
     padding: 0;
     display: flex;
@@ -113,7 +114,8 @@ footer {
     color: var(--color-text-light);
     border: 2px solid var(--color-text-light);
     padding: 10px 20px;
-    font-family: 'Courier New', Courier, monospace;
+    /* Tipografía mejorada para legibilidad y profesionalidad */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 1em;
     font-weight: bold;
     text-decoration: none;
@@ -570,6 +572,42 @@ footer {
 }
 
 /* 7. UTILIDADES DE ACCESIBILIDAD */
+
+/* 9. ESTILOS DEL FOOTER MEJORADO */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    margin-top: auto;
+}
+
+footer h2 {
+    color: var(--color-text-light);
+    margin-bottom: 5px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+.footer-contact-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+    .footer-contact-info {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+/* 8. ESTILOS DE CITAS PASADAS (check.html) */
 
 /* 8. ESTILOS DE CITAS PASADAS (check.html) */
 .past-appointments-summary {

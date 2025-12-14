@@ -5,7 +5,7 @@
 
 import { guardarCita, obtenerCitas } from './storage.js';
 // Se importa formatearFecha para mejorar el mensaje de error en conflicto
-import { validarFechaHoraCita, validarDNI, formatearFecha } from './utils.js'; 
+import { validarFechaHoraCita, validarDNI, validarFechaNoFutura, formatearFecha } from './utils.js'; 
 
 function setupIndexPageLogic() {
     const modal = document.getElementById('reservationModal');
@@ -107,15 +107,21 @@ function setupIndexPageLogic() {
              return;
         }
 
-        // 2. Validación de DNI
+        // 2. Validación de DNI (AHORA COMPLETA)
         if (!validarDNI(data.dni)) {
-             displayError('Error: El formato del DNI/NIE es incorrecto (Ej: 12345678A o X1234567B).');
+             displayError('Error: El DNI/NIE introducido no es válido. Por favor, verifica el número y la letra de control.');
              return;
         }
         
         // 3. Validación de fecha y hora futura (CRÍTICO CORREGIDO)
         if (!validarFechaHoraCita(data.fecha_reserva, data.hora_reserva)) {
             displayError('Error: La fecha y hora de la cita no pueden ser pasadas.');
+            return;
+        }
+        
+        // 4. Validación de fecha de nacimiento (NUEVA)
+        if (!validarFechaNoFutura(data.fecha_nacimiento)) {
+            displayError('Error: La fecha de nacimiento no puede ser una fecha futura.');
             return;
         }
         
